@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calorie Balance</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600;700&display=swap">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Calorie Balance</h1>
+            <p class="tagline">Visualize the balance between calories in and calories out</p>
+        </header>
+
+        <div class="user-data-form panel-section">
+            <h2>Get Your Personalized Plan</h2>
+            <p class="form-description">Enter your details to save your results and receive personalized nutrition tips.</p>
+            <div class="form-group">
+                <label for="user-name">Name:</label>
+                <input type="text" id="user-name" placeholder="Your Name">
+            </div>
+            <div class="form-group">
+                <label for="user-email">Email:</label>
+                <input type="email" id="user-email" placeholder="your.email@example.com">
+            </div>
+            <div class="form-group checkbox-group">
+                <input type="checkbox" id="consent" checked>
+                <label for="consent">I agree to receive nutrition tips and updates</label>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="panel-section">
+                <h2>Personal Information</h2>
+                <div class="form-group">
+                    <label for="age">Age:</label>
+                    <input type="number" id="age" placeholder="Years">
+                </div>
+                <div class="form-group">
+                    <label>Gender:</label>
+                    <div class="radio-group">
+                        <input type="radio" id="male" name="gender" value="male" checked>
+                        <label for="male">Male</label>
+                        <input type="radio" id="female" name="gender" value="female">
+                        <label for="female">Female</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="weight">Weight:</label>
+                    <div class="input-with-unit">
+                        <input type="number" id="weight" placeholder="Weight">
+                        <select id="weight-unit">
+                            <option value="kg">kg</option>
+                            <option value="lbs">lbs</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="height">Height:</label>
+                    <div class="input-with-unit">
+                        <input type="number" id="height" placeholder="Height">
+                        <select id="height-unit">
+                            <option value="cm">cm</option>
+                            <option value="in">in</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="activity">Activity Level:</label>
+                    <select id="activity">
+                        <option value="1.2">Sedentary (little or no exercise)</option>
+                        <option value="1.375">Lightly active (light exercise 1-3 days/week)</option>
+                        <option value="1.55" selected>Moderately active (moderate exercise 3-5 days/week)</option>
+                        <option value="1.725">Very active (hard exercise 6-7 days/week)</option>
+                        <option value="1.9">Extra active (very hard exercise & physical job)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="panel-section">
+                <h2>Goal Settings</h2>
+                <div class="form-group">
+                    <label>Goal:</label>
+                    <div class="radio-group">
+                        <input type="radio" id="deficit" name="goal" value="deficit" checked>
+                        <label for="deficit">Weight Loss</label>
+                        <input type="radio" id="maintenance" name="goal" value="maintenance">
+                        <label for="maintenance">Maintenance</label>
+                        <input type="radio" id="surplus" name="goal" value="surplus">
+                        <label for="surplus">Weight Gain</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="target-weight">Target Weight Change:</label>
+                    <div class="input-with-unit">
+                        <input type="number" id="target-weight" placeholder="e.g., 5">
+                        <select id="target-weight-unit">
+                            <option value="kg">kg</option>
+                            <option value="lbs">lbs</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="target-weeks">Timeframe:</label>
+                    <div class="input-with-unit">
+                        <input type="number" id="target-weeks" placeholder="e.g., 8">
+                        <span class="unit-label">weeks</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="recommended-rate" id="recommended-rate">
+                        <span class="rate-label">Recommended rate:</span>
+                        <span class="rate-value" id="rate-value">0.5-1.0 kg per week</span>
+                    </div>
+                </div>
+                <button id="calculate-btn" class="primary-btn">Calculate</button>
+                <button id="save-results-btn" class="secondary-btn"><i class="fas fa-save"></i> Save Results</button>
+            </div>
+
+            <div class="balance-scale-container">
+                <h2>Your Calorie Balance</h2>
+                <div class="scale-labels">
+                    <div class="scale-label">Calories In</div>
+                    <div class="scale-label">Calories Out</div>
+                </div>
+                <div class="balance-scale scale-tipped-left">
+                    <div class="scale-plate calories-in">
+                        <div class="plate-icon">🍽️</div>
+                        <div class="plate-content" id="calories-in-value">2007</div>
+                    </div>
+                    <div class="scale-beam">
+                        <div class="beam-body"></div>
+                        <div class="beam-fulcrum"></div>
+                    </div>
+                    <div class="scale-plate calories-out">
+                        <div class="plate-icon">🏃</div>
+                        <div class="plate-content" id="calories-out-value">2507</div>
+                    </div>
+                </div>
+                <div class="balance-status">
+                    <div class="status-indicator deficit-status">
+                        <div class="indicator-dot"></div>
+                        <span id="balance-status-text">Calorie Deficit</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Protein Recommendation Section -->
+            <div class="protein-recommendation">
+                <div class="protein-header">
+                    <h2 class="protein-title">Protein Recommendations</h2>
+                    <div class="protein-badge" id="balance-indicator" style="background-color: var(--primary-color);">DEFICIT</div>
+                </div>
+                <div class="protein-chart">
+                    <div class="protein-card">
+                        <div class="protein-card-title">Daily Recommendation</div>
+                        <div class="protein-card-value" id="protein-recommended-value">98 g</div>
+                    </div>
+                    <div class="protein-card">
+                        <div class="protein-card-title">Per Day</div>
+                        <div class="protein-card-value" id="protein-daily-value">98 g</div>
+                    </div>
+                    <div class="protein-card">
+                        <div class="protein-card-title">Per Meal (4 meals)</div>
+                        <div class="protein-card-value" id="protein-per-meal-value">25 g</div>
+                    </div>
+                </div>
+                <div class="protein-info">
+                    <h3 class="protein-info-title">Protein Sources</h3>
+                    <p class="protein-info-text">Here are some high-quality protein sources to help you meet your daily goals:</p>
+                    <div class="protein-sources">
+                        <div class="protein-source">
+                            <div class="source-icon">🥩</div>
+                            <div class="source-details">
+                                <div class="source-name">Chicken Breast</div>
+                                <div class="source-protein">31g per 100g</div>
+                            </div>
+                        </div>
+                        <div class="protein-source">
+                            <div class="source-icon">🥚</div>
+                            <div class="source-details">
+                                <div class="source-name">Eggs</div>
+                                <div class="source-protein">13g per 100g</div>
+                            </div>
+                        </div>
+                        <div class="protein-source">
+                            <div class="source-icon">🐟</div>
+                            <div class="source-details">
+                                <div class="source-name">Salmon</div>
+                                <div class="source-protein">25g per 100g</div>
+                            </div>
+                        </div>
+                        <div class="protein-source">
+                            <div class="source-icon">🥜</div>
+                            <div class="source-details">
+                                <div class="source-name">Almonds</div>
+                                <div class="source-protein">21g per 100g</div>
+                            </div>
+                        </div>
+                        <div class="protein-source">
+                            <div class="source-icon">🥛</div>
+                            <div class="source-details">
+                                <div class="source-name">Greek Yogurt</div>
+                                <div class="source-protein">10g per 100g</div>
+                            </div>
+                        </div>
+                        <div class="protein-source">
+                            <div class="source-icon">🧀</div>
+                            <div class="source-details">
+                                <div class="source-name">Cottage Cheese</div>
+                                <div class="source-protein">11g per 100g</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel-section">
+                <h2>Your Calorie Numbers</h2>
+                <div class="result-item highlight">
+                    <div class="result-label">BMR:</div>
+                    <div class="result-value" id="bmr-value">1618</div>
+                    <div class="result-info tooltip">
+                        ℹ️
+                        <span class="tooltip-text">Basal Metabolic Rate - calories your body needs at rest</span>
+                    </div>
+                </div>
+                <div class="result-item highlight">
+                    <div class="result-label">TDEE:</div>
+                    <div class="result-value" id="tdee-value">2507</div>
+                    <div class="result-info tooltip">
+                        ℹ️
+                        <span class="tooltip-text">Total Daily Energy Expenditure - total calories burned per day</span>
+                    </div>
+                </div>
+                <div class="result-item highlight">
+                    <div class="result-label">Recommended Intake:</div>
+                    <div class="result-value" id="recommended-value">2007</div>
+                    <div class="result-info tooltip">
+                        ℹ️
+                        <span class="tooltip-text">Recommended daily calorie intake based on your goal</span>
+                    </div>
+                </div>
+                <div class="result-item highlight">
+                    <div class="result-label">Calorie Balance:</div>
+                    <div class="result-value" id="balance-value">500</div>
+                    <div class="result-status" id="balance-indicator">BALANCED</div>
+                </div>
+                <div class="result-item">
+                    <div class="result-label">Weekly Projection:</div>
+                    <div class="result-value" id="weekly-result">-1.0 lbs</div>
+                </div>
+                <div class="result-item">
+                    <div class="result-label">Monthly Projection:</div>
+                    <div class="result-value" id="monthly-result">-4.3 lbs</div>
+                </div>
+                <button id="view-projection" class="secondary-btn">View Detailed Projection</button>
+            </div>
+        </div>
+
+        <!-- Educational Information -->
+        <div class="educational-info">
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <h3 class="accordion-title">What is BMR?</h3>
+                    <span class="accordion-icon">+</span>
+                </div>
+                <div class="accordion-content">
+                    <p>Basal Metabolic Rate (BMR) is the number of calories your body needs to maintain basic functions at rest, such as breathing and circulation.</p>
+                    <p>Your BMR is influenced by factors like age, gender, weight, and height.</p>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <h3 class="accordion-title">What is TDEE?</h3>
+                    <span class="accordion-icon">+</span>
+                </div>
+                <div class="accordion-content">
+                    <p>Total Daily Energy Expenditure (TDEE) is the total number of calories you burn in a day, including your BMR and all activities.</p>
+                    <p>TDEE = BMR × Activity Multiplier</p>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <h3 class="accordion-title">How does a calorie deficit work?</h3>
+                    <span class="accordion-icon">+</span>
+                </div>
+                <div class="accordion-content">
+                    <p>A calorie deficit occurs when you consume fewer calories than your body needs, forcing it to use stored energy (fat) to make up the difference.</p>
+                    <p>A deficit of 500 calories per day can lead to approximately 1 pound of weight loss per week.</p>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <h3 class="accordion-title">How does a calorie surplus work?</h3>
+                    <span class="accordion-icon">+</span>
+                </div>
+                <div class="accordion-content">
+                    <p>A calorie surplus occurs when you consume more calories than your body needs, allowing it to store the excess energy.</p>
+                    <p>When combined with resistance training, a moderate surplus can support<response clipped><NOTE>To save on context only part of this file has been shown to you. You should retry this tool after you have searched inside the file with `grep -n` in order to find the line numbers of what you are looking for.</NOTE>
